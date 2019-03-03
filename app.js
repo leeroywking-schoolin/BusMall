@@ -25,9 +25,10 @@ var allProds = ['bag.jpg',
   'wine-glass.jpg',
 ];
 var allProdsObjList = [];
+var allProdsCache = [];
 
 function ProdPic(filename) {
-  // debugger;
+
   var fileArray = filename.split('.');
   this.filepath = `images/${fileArray[0]}.${fileArray[1]}`;
   this.name = fileArray[0];
@@ -36,9 +37,8 @@ function ProdPic(filename) {
   allProdsObjList.push(this);
 };
 
-function prodObjListMaker(){
-  // debugger;
-  for (var i = 0; i < allProds.length; i++){
+function prodObjListMaker() {
+  for (var i = 0; i < allProds.length; i++) {
     new ProdPic(allProds[i]);
   }
 };
@@ -46,32 +46,37 @@ prodObjListMaker();
 
 
 function showRandomProd(prodNumber) {
-  var random = Math.floor(Math.random() * allProds.length);
+  var random = Math.floor(Math.random() * allProdsObjList.length);
   prodNumber.src = allProdsObjList[random].filepath;
   prodNumber.alt = allProdsObjList[random].name;
   prodNumber.title = allProdsObjList[random].name;
   prodNumber.clicks = allProdsObjList[random].clicks;
   allProdsObjList[random].views++;
-  // console.log('current Product, ', allProdsObjList[random]);
+  console.log(allProdsObjList);
+  console.log(allProdsObjList[random]);
+  allProdsCache.push(allProdsObjList[random]);
+  allProdsObjList.splice(random, 1)
+  console.log(allProdsCache);
 };
 
-function nextRound(){
-showRandomProd(prod1);
-showRandomProd(prod2);
-showRandomProd(prod3);
+function nextRound() {
+  showRandomProd(prod1);
+  showRandomProd(prod2);
+  showRandomProd(prod3);
 }
 
 
 function handleClick(event) {
-  for(var i = 0; i < allProdsObjList.length; i++){
-    if (allProdsObjList[i].name === event.target.title){
-      allProdsObjList[i].clicks++;
+  for (var i = 0; i < allProdsCache.length; i++) {
+    if (allProdsCache[i].name === event.target.title) {
+      allProdsCache[i].clicks++;
     }
   }
-  console.log(event.target.title);
-  console.log(event.target);
-  console.log('target, ', event.target);
   nextRound();
+  for (var i = 0; i < allProdsCache.length / 2; i++) {
+    allProdsObjList.push(allProdsCache[i]);
+  };
+  allProdsCache.splice(0, allProdsCache.length / 2);
 };
 
 prod1.addEventListener('click', handleClick);
