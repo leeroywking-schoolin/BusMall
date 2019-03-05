@@ -78,7 +78,7 @@ function clickCount() {
   if (clickCounter >= 25) { finalOutput(); }
   else {
     var visibleCount = document.getElementById('countdown');
-    var liEltotal = document.createElement('td');
+    var liEltotal = document.createElement('h3');
     liEltotal.id = 'deletthis';
     liEltotal.textContent = 25 - clickCounter;
     visibleCount.appendChild(liEltotal);

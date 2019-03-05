@@ -14,9 +14,7 @@ header{
     padding: 30px;
 }
 
-#resultstable{
-    outline-style: dashed black;
-}
+
 th{
     text-emphasis: bold;
     padding: 10px;
@@ -26,7 +24,23 @@ td{
     text-align: center;
     outline-color: black;
 }
-
 section{
-    display: inline-block;
+    display:inline-block;
+}
+section #resultstable{
+    margin-left: 0 auto;
+    outline-style: dashed black;
+}
+tr:nth-child(even){
+    background-color: aquamarine;
+}
+tr:nth-child(odd){
+    background-color: azure;
+}
+body{
+text-align: center;
+}
+
+#deletthis{
+    text-align: center;
 }
