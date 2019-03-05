@@ -26,3 +26,7 @@ td{
     text-align: center;
     outline-color: black;
 }
+
+section{
+    display: inline-block;
+}

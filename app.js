@@ -127,22 +127,22 @@ function renderResults(){
     var views = document.createElement('td');
     var clicks = document.createElement('td');
     var blank = document.createElement('td');
-    var percentage = document.createElement('td');
+    var percentageText = document.createElement('td');
     var view = allProdsObjList[i].views;
     var click = allProdsObjList[i].clicks;
     name.textContent = allProdsObjList[i].name;
     views.textContent = view;
     clicks.textContent = click;
-    percentage.textContent = Math.floor(click / view * 100) + '%'; 
+    var percentage = Math.floor(click / view * 100);
+    percentageText.textContent =  percentage + '%';
+    
     row.appendChild(blank);
     row.appendChild(name);
     row.appendChild(views);
     row.appendChild(clicks);
-    row.appendChild(percentage);
+    if (isNaN(percentage)){percentageText.textContent = '0%'}
+    else{};
+    row.appendChild(percentageText);
     finalTable.appendChild(row);
   }
-
-  // Make a header row 
-  // For loop for results  
-  // Make a footer 
 }
