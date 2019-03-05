@@ -3,6 +3,7 @@ var clickCounter = 0;
 var prod1 = document.getElementById('prod1');
 var prod2 = document.getElementById('prod2');
 var prod3 = document.getElementById('prod3');
+
 var allProds = ['bag.jpg',
   'breakfast.jpg',
   'dog-duck.jpg',
@@ -46,6 +47,7 @@ prodObjListMaker();
 
 
 function showRandomProd(prodNumber) {
+  // debugger;
   var random = Math.floor(Math.random() * allProdsObjList.length);
   prodNumber.src = allProdsObjList[random].filepath;
   prodNumber.alt = allProdsObjList[random].name;
@@ -64,15 +66,12 @@ function nextRound() {
   showRandomProd(prod2);
   showRandomProd(prod3);
 }
-function renderTable() {
-  var main = document.getElementById('main');
-  main.parentElement.removeChild(main);
-}
+
 
 function finalOutput(){
   addBackCache();
-  allProdsObjList.push(allProdsCache[0])
-  renderTable();
+  allProdsObjList.push(allProdsCache[1]);
+  renderResults();
 }
 
 function clickCount() {
@@ -86,6 +85,7 @@ function clickCount() {
   }
 }
 function addBackCache(){
+
   for (var i = 0; i < allProdsCache.length / 2; i++) {
     allProdsObjList.push(allProdsCache[i]);
   };
@@ -112,3 +112,37 @@ prod3.addEventListener('click', handleClick);
 nextRound();
 clickCount();
 
+var finalTable = document.getElementById('resultstable')
+
+function renderResults(){
+  var main = document.getElementById('main');
+  main.parentElement.removeChild(main);
+  var header = document.createElement('tr');
+  header.innerHTML = '<th></th><th>Name of Item</th><th>Times Displayed</th><th>Times Clicked</th><th>Percentage Clicked</th>';
+  finalTable.appendChild(header);
+  
+  for (var i = 0; i < allProdsObjList.length; i++){
+    var row = document.createElement('tr');
+    var name = document.createElement('td');
+    var views = document.createElement('td');
+    var clicks = document.createElement('td');
+    var blank = document.createElement('td');
+    var percentage = document.createElement('td');
+    var view = allProdsObjList[i].views;
+    var click = allProdsObjList[i].clicks;
+    name.textContent = allProdsObjList[i].name;
+    views.textContent = view;
+    clicks.textContent = click;
+    percentage.textContent = Math.floor(click / view * 100) + '%'; 
+    row.appendChild(blank);
+    row.appendChild(name);
+    row.appendChild(views);
+    row.appendChild(clicks);
+    row.appendChild(percentage);
+    finalTable.appendChild(row);
+  }
+
+  // Make a header row 
+  // For loop for results  
+  // Make a footer 
+}
