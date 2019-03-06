@@ -47,18 +47,14 @@ prodObjListMaker();
 
 
 function showRandomProd(prodNumber) {
-  // debugger;
   var random = Math.floor(Math.random() * allProdsObjList.length);
   prodNumber.src = allProdsObjList[random].filepath;
   prodNumber.alt = allProdsObjList[random].name;
   prodNumber.title = allProdsObjList[random].name;
   prodNumber.clicks = allProdsObjList[random].clicks;
   allProdsObjList[random].views++;
-  console.log(allProdsObjList);
-  console.log(allProdsObjList[random]);
   allProdsCache.push(allProdsObjList[random]);
   allProdsObjList.splice(random, 1);
-  console.log(allProdsCache);
 };
 
 function nextRound() {
