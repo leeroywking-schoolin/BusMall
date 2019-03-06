@@ -64,10 +64,12 @@ function nextRound() {
 }
 
 
-function finalOutput(){
+function finalOutput() {
   addBackCache();
   allProdsObjList.push(allProdsCache[1]);
   renderResults();
+  labelDataMaker();
+  drawChart();
 }
 
 function clickCount() {
@@ -80,7 +82,7 @@ function clickCount() {
     visibleCount.appendChild(liEltotal);
   }
 }
-function addBackCache(){
+function addBackCache() {
 
   for (var i = 0; i < allProdsCache.length / 2; i++) {
     allProdsObjList.push(allProdsCache[i]);
@@ -110,14 +112,14 @@ clickCount();
 
 var finalTable = document.getElementById('resultstable')
 
-function renderResults(){
+function renderResults() {
   var main = document.getElementById('main');
   main.parentElement.removeChild(main);
   var header = document.createElement('tr');
   header.innerHTML = '<th></th><th>Name of Item</th><th>Times Displayed</th><th>Times Clicked</th><th>Percentage Clicked</th>';
   finalTable.appendChild(header);
-  
-  for (var i = 0; i < allProdsObjList.length; i++){
+
+  for (var i = 0; i < allProdsObjList.length; i++) {
     var row = document.createElement('tr');
     var name = document.createElement('td');
     var views = document.createElement('td');
@@ -131,15 +133,68 @@ function renderResults(){
     clicks.textContent = click;
     image.innerHTML = `<img src = "${allProdsObjList[i].filepath}"></img>`;
     var percentage = Math.floor(click / view * 100);
-    percentageText.textContent =  percentage + '%';
-    
+    percentageText.textContent = percentage + '%';
+
     row.appendChild(image);
     row.appendChild(name);
     row.appendChild(views);
     row.appendChild(clicks);
-    if (isNaN(percentage)){percentageText.textContent = '0%'}
-    else{};
+    if (isNaN(percentage)) { percentageText.textContent = '0%' }
+    else { };
     row.appendChild(percentageText);
     finalTable.appendChild(row);
   }
 }
+
+var labelArray = [];
+var clickArray = [];
+var viewArray = [];
+function labelDataMaker() {
+  for (var i = 0; i < allProdsObjList.length; i++) {
+    labelArray.push(allProdsObjList[i].name);
+    clickArray.push(allProdsObjList[i].clicks);
+    viewArray.push(allProdsObjList[i].views);
+  };
+};
+
+
+function drawChart() {
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'polarArea',
+    data: {
+      labels: labelArray,
+      datasets: [{
+        label: '# of Clicks',
+        data: clickArray,
+        backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+        ],
+        borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }]
+      }
+    }
+  });
+}
+
