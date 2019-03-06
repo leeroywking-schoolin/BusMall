@@ -44,3 +44,13 @@ text-align: center;
 #deletthis{
     text-align: center;
 }
+
+td img{
+    width: auto;
+    height: 50px;
+    object-fit: auto;
+    border: 1px solid rgb(0, 153, 82);
+    display: inline-block;
+    padding: 5px;
+    margin: auto;
+}

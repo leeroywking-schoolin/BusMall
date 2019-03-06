@@ -122,17 +122,18 @@ function renderResults(){
     var name = document.createElement('td');
     var views = document.createElement('td');
     var clicks = document.createElement('td');
-    var blank = document.createElement('td');
+    var image = document.createElement('td');
     var percentageText = document.createElement('td');
     var view = allProdsObjList[i].views;
     var click = allProdsObjList[i].clicks;
     name.textContent = allProdsObjList[i].name;
     views.textContent = view;
     clicks.textContent = click;
+    image.innerHTML = `<img src = "${allProdsObjList[i].filepath}"></img>`;
     var percentage = Math.floor(click / view * 100);
     percentageText.textContent =  percentage + '%';
     
-    row.appendChild(blank);
+    row.appendChild(image);
     row.appendChild(name);
     row.appendChild(views);
     row.appendChild(clicks);
