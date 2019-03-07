@@ -64,10 +64,12 @@ function nextRound() {
 }
 
 
-function finalOutput(){
+function finalOutput() {
   addBackCache();
   allProdsObjList.push(allProdsCache[1]);
   renderResults();
+  labelDataMaker();
+  drawChart();
 }
 
 function clickCount() {
@@ -80,7 +82,7 @@ function clickCount() {
     visibleCount.appendChild(liEltotal);
   }
 }
-function addBackCache(){
+function addBackCache() {
 
   for (var i = 0; i < allProdsCache.length / 2; i++) {
     allProdsObjList.push(allProdsCache[i]);
@@ -110,14 +112,14 @@ clickCount();
 
 var finalTable = document.getElementById('resultstable')
 
-function renderResults(){
+function renderResults() {
   var main = document.getElementById('main');
   main.parentElement.removeChild(main);
   var header = document.createElement('tr');
   header.innerHTML = '<th></th><th>Name of Item</th><th>Times Displayed</th><th>Times Clicked</th><th>Percentage Clicked</th>';
   finalTable.appendChild(header);
-  
-  for (var i = 0; i < allProdsObjList.length; i++){
+
+  for (var i = 0; i < allProdsObjList.length; i++) {
     var row = document.createElement('tr');
     var name = document.createElement('td');
     var views = document.createElement('td');
@@ -131,15 +133,68 @@ function renderResults(){
     clicks.textContent = click;
     image.innerHTML = `<img src = "${allProdsObjList[i].filepath}"></img>`;
     var percentage = Math.floor(click / view * 100);
-    percentageText.textContent =  percentage + '%';
-    
+    percentageText.textContent = percentage + '%';
+
     row.appendChild(image);
     row.appendChild(name);
     row.appendChild(views);
     row.appendChild(clicks);
-    if (isNaN(percentage)){percentageText.textContent = '0%'}
-    else{};
+    if (isNaN(percentage)) { percentageText.textContent = '0%' }
+    else { };
     row.appendChild(percentageText);
     finalTable.appendChild(row);
   }
 }
+
+var labelArray = [];
+var clickArray = [];
+var viewArray = [];
+var backgroundColor = [];
+var borderColor = [];
+var percentageArray = [];
+
+function labelDataMaker() {
+  for (var i = 0; i < allProdsObjList.length; i++) {
+    labelArray.push(allProdsObjList[i].name);
+    clickArray.push(allProdsObjList[i].clicks);
+    viewArray.push(allProdsObjList[i].views);
+    percentageArray.push(allProdsObjList[i].clicks / allProdsObjList[i].views * 100);
+    backgroundColor.push('rgba(' + (Math.floor(Math.random() * 256)) + ', ' + Math.floor((Math.random() * 256)) + ', ' + Math.floor((Math.random()) * 256) + ', 0.2)');
+    borderColor.push('rgba(' + Math.floor((Math.random() * 256)) + ', ' + Math.floor((Math.random() * 256)) + ', ' + Math.floor((Math.random() * 256)) + ', 0.2)');
+  };
+};
+
+function drawChart() {
+  var ctx = document.getElementById("myChart").getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'radar',
+    data: {
+      labels: labelArray,
+      datasets: [{
+        label: '# of Clicks',
+        data: clickArray,
+        backgroundColor: backgroundColor[0],
+        borderColor: borderColor,
+        borderWidth: 1
+      },
+      {
+        label: '# of Views',
+        data: viewArray,
+        backgroundColor: backgroundColor[3],
+        borderColor: borderColor,
+        borderWidth: 1
+      },
+      ]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }]
+      }
+    }
+  });
+}
+
