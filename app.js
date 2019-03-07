@@ -149,42 +149,42 @@ function renderResults() {
 var labelArray = [];
 var clickArray = [];
 var viewArray = [];
+var backgroundColor = [];
+var borderColor = [];
+var percentageArray = [];
+
 function labelDataMaker() {
   for (var i = 0; i < allProdsObjList.length; i++) {
     labelArray.push(allProdsObjList[i].name);
     clickArray.push(allProdsObjList[i].clicks);
     viewArray.push(allProdsObjList[i].views);
+    percentageArray.push(allProdsObjList[i].clicks / allProdsObjList[i].views * 100);
+    backgroundColor.push('rgba(' + (Math.floor(Math.random() * 256)) + ', ' + Math.floor((Math.random() * 256)) + ', ' + Math.floor((Math.random()) * 256) + ', 0.2)');
+    borderColor.push('rgba(' + Math.floor((Math.random() * 256)) + ', ' + Math.floor((Math.random() * 256)) + ', ' + Math.floor((Math.random() * 256)) + ', 0.2)');
   };
 };
-
 
 function drawChart() {
   var ctx = document.getElementById("myChart").getContext('2d');
   var myChart = new Chart(ctx, {
-    type: 'polarArea',
+    type: 'radar',
     data: {
       labels: labelArray,
       datasets: [{
         label: '# of Clicks',
         data: clickArray,
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255,99,132,1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
+        backgroundColor: backgroundColor[0],
+        borderColor: borderColor,
         borderWidth: 1
-      }]
+      },
+      {
+        label: '# of Views',
+        data: viewArray,
+        backgroundColor: backgroundColor[3],
+        borderColor: borderColor,
+        borderWidth: 1
+      },
+      ]
     },
     options: {
       scales: {
