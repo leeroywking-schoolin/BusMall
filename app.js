@@ -116,7 +116,7 @@ function renderResults() {
   var main = document.getElementById('main');
   main.parentElement.removeChild(main);
   var header = document.createElement('tr');
-  header.innerHTML = '<th></th><th>Name of Item</th><th>Times Displayed</th><th>Times Clicked</th><th>Percentage Clicked</th>';
+  header.innerHTML = '<th>Thumbnail</th><th>Name of Item</th><th>Times Displayed</th><th>Times Clicked</th><th>Percentage Clicked</th>';
   finalTable.appendChild(header);
 
   for (var i = 0; i < allProdsObjList.length; i++) {
@@ -126,6 +126,7 @@ function renderResults() {
     var clicks = document.createElement('td');
     var image = document.createElement('td');
     var percentageText = document.createElement('td');
+
     var view = allProdsObjList[i].views;
     var click = allProdsObjList[i].clicks;
     name.textContent = allProdsObjList[i].name;
