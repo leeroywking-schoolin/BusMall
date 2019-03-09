@@ -20,9 +20,6 @@ renderTags();
 var prod0 = document.getElementById('prod0');
 var prod1 = document.getElementById('prod1');
 var prod2 = document.getElementById('prod2');
-// var prod3 = document.getElementById('prod3');
-// var prod4 = document.getElementById('prod4');
-// var prod5 = document.getElementById('prod5');
 
 var allProds = ['bag.jpg',
   'breakfast.jpg',
