@@ -3,7 +3,7 @@ var clickCounter = 0;
 
 
 var numberOfRounds = 30;
-var numberOfImages = 3;
+var numberOfImages = 3 /** only use the number 3 for now */;
 var imageVariableArray = [];
 var imageCollection = document.getElementById('imagecollection');
 
@@ -78,15 +78,10 @@ function showRandomProd(prodNumber) {
 };
 
 function nextRound() {
-  // for (var i = 0; i < numberOfImages ; i++){
-  //   showRandomProd(imageVariableArray[i]);
-  // }
   showRandomProd(prod0);
   showRandomProd(prod1);
   showRandomProd(prod2);
-  // showRandomProd(prod3);
-  // showRandomProd(prod4);
-  // showRandomProd(prod5);
+
 
 }
 
