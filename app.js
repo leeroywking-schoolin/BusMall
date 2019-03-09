@@ -1,8 +1,28 @@
 'use strict';
 var clickCounter = 0;
+
+
+var numberOfRounds = 30;
+var numberOfImages = 3 /** only use the number 3 for now */;
+var imageVariableArray = [];
+var imageCollection = document.getElementById('imagecollection');
+
+
+
+
+function renderTags(){
+  for(var i = 0; i < numberOfImages ; i++){
+    var image = document.createElement('td');
+    image.innerHTML = `<img id="prod${i}" src="" alt="" title="">`;
+    imageCollection.appendChild(image);
+    imageVariableArray.push(`prod${i}`);
+  };
+}
+renderTags();
+
+var prod0 = document.getElementById('prod0');
 var prod1 = document.getElementById('prod1');
 var prod2 = document.getElementById('prod2');
-var prod3 = document.getElementById('prod3');
 
 var allProds = ['bag.jpg',
   'breakfast.jpg',
@@ -28,6 +48,7 @@ var allProds = ['bag.jpg',
 var allProdsObjList = [];
 var allProdsCache = [];
 
+
 function ProdPic(filename) {
 
   var fileArray = filename.split('.');
@@ -45,6 +66,8 @@ function prodObjListMaker() {
 };
 prodObjListMaker();
 
+if (!!localStorage.allProdsStored == true){allProdsObjList = JSON.parse(localStorage.allProdsStored)}
+else{};
 
 function showRandomProd(prodNumber) {
   var random = Math.floor(Math.random() * allProdsObjList.length);
@@ -58,36 +81,37 @@ function showRandomProd(prodNumber) {
 };
 
 function nextRound() {
+  showRandomProd(prod0);
   showRandomProd(prod1);
   showRandomProd(prod2);
-  showRandomProd(prod3);
+
+
 }
 
 
 function finalOutput() {
   addBackCache();
-  allProdsObjList.push(allProdsCache[1]);
   renderResults();
   labelDataMaker();
   drawChart();
+  localStorage.allProdsStored = JSON.stringify(allProdsObjList);
 }
 
 function clickCount() {
-  if (clickCounter >= 25) { finalOutput(); }
+  if (clickCounter >= numberOfRounds) { finalOutput(); }
   else {
     var visibleCount = document.getElementById('countdown');
     var liEltotal = document.createElement('h3');
     liEltotal.id = 'deletthis';
-    liEltotal.textContent = 25 - clickCounter;
+    liEltotal.textContent = numberOfRounds - clickCounter;
     visibleCount.appendChild(liEltotal);
   }
 }
 function addBackCache() {
-
-  for (var i = 0; i < allProdsCache.length / 2; i++) {
+  for (var i = 0; i < numberOfImages; i++) {
     allProdsObjList.push(allProdsCache[i]);
   };
-  allProdsCache.splice(0, allProdsCache.length / 2);
+  allProdsCache.splice(0, numberOfImages);
 }
 function handleClick(event) {
   for (var i = 0; i < allProdsCache.length; i++) {
@@ -103,9 +127,7 @@ function handleClick(event) {
   clickCount();
 };
 
-prod1.addEventListener('click', handleClick);
-prod2.addEventListener('click', handleClick);
-prod3.addEventListener('click', handleClick);
+imageCollection.addEventListener('click', handleClick);
 
 nextRound();
 clickCount();
@@ -116,7 +138,7 @@ function renderResults() {
   var main = document.getElementById('main');
   main.parentElement.removeChild(main);
   var header = document.createElement('tr');
-  header.innerHTML = '<th></th><th>Name of Item</th><th>Times Displayed</th><th>Times Clicked</th><th>Percentage Clicked</th>';
+  header.innerHTML = '<th>Thumbnail</th><th>Name of Item</th><th>Times Displayed</th><th>Times Clicked</th><th>Percentage Clicked</th>';
   finalTable.appendChild(header);
 
   for (var i = 0; i < allProdsObjList.length; i++) {
@@ -126,6 +148,7 @@ function renderResults() {
     var clicks = document.createElement('td');
     var image = document.createElement('td');
     var percentageText = document.createElement('td');
+
     var view = allProdsObjList[i].views;
     var click = allProdsObjList[i].clicks;
     name.textContent = allProdsObjList[i].name;
