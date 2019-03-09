@@ -1,8 +1,28 @@
 'use strict';
 var clickCounter = 0;
+
+
+var numberOfRounds = 30;
+var numberOfImages = 3;
+var imageVariableArray = [];
+var imageCollection = document.getElementById('imagecollection');
+
+function renderTags(){
+  for(var i = 0; i < numberOfImages ; i++){
+    var image = document.createElement('td');
+    image.innerHTML = `<img id="prod${i}" src="" alt="" title="">`;
+    imageCollection.appendChild(image);
+    imageVariableArray.push(`prod${i}`);
+  };
+}
+renderTags();
+
+var prod0 = document.getElementById('prod0');
 var prod1 = document.getElementById('prod1');
 var prod2 = document.getElementById('prod2');
-var prod3 = document.getElementById('prod3');
+// var prod3 = document.getElementById('prod3');
+// var prod4 = document.getElementById('prod4');
+// var prod5 = document.getElementById('prod5');
 
 var allProds = ['bag.jpg',
   'breakfast.jpg',
@@ -58,36 +78,41 @@ function showRandomProd(prodNumber) {
 };
 
 function nextRound() {
+  // for (var i = 0; i < numberOfImages ; i++){
+  //   showRandomProd(imageVariableArray[i]);
+  // }
+  showRandomProd(prod0);
   showRandomProd(prod1);
   showRandomProd(prod2);
-  showRandomProd(prod3);
+  // showRandomProd(prod3);
+  // showRandomProd(prod4);
+  // showRandomProd(prod5);
+
 }
 
 
 function finalOutput() {
   addBackCache();
-  allProdsObjList.push(allProdsCache[1]);
   renderResults();
   labelDataMaker();
   drawChart();
 }
 
 function clickCount() {
-  if (clickCounter >= 25) { finalOutput(); }
+  if (clickCounter >= numberOfRounds) { finalOutput(); }
   else {
     var visibleCount = document.getElementById('countdown');
     var liEltotal = document.createElement('h3');
     liEltotal.id = 'deletthis';
-    liEltotal.textContent = 25 - clickCounter;
+    liEltotal.textContent = numberOfRounds - clickCounter;
     visibleCount.appendChild(liEltotal);
   }
 }
 function addBackCache() {
-
-  for (var i = 0; i < allProdsCache.length / 2; i++) {
+  for (var i = 0; i < numberOfImages; i++) {
     allProdsObjList.push(allProdsCache[i]);
   };
-  allProdsCache.splice(0, allProdsCache.length / 2);
+  allProdsCache.splice(0, numberOfImages);
 }
 function handleClick(event) {
   for (var i = 0; i < allProdsCache.length; i++) {
@@ -103,9 +128,7 @@ function handleClick(event) {
   clickCount();
 };
 
-prod1.addEventListener('click', handleClick);
-prod2.addEventListener('click', handleClick);
-prod3.addEventListener('click', handleClick);
+imageCollection.addEventListener('click', handleClick);
 
 nextRound();
 clickCount();
