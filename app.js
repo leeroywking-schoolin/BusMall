@@ -7,6 +7,9 @@ var numberOfImages = 3 /** only use the number 3 for now */;
 var imageVariableArray = [];
 var imageCollection = document.getElementById('imagecollection');
 
+
+
+
 function renderTags(){
   for(var i = 0; i < numberOfImages ; i++){
     var image = document.createElement('td');
@@ -45,6 +48,7 @@ var allProds = ['bag.jpg',
 var allProdsObjList = [];
 var allProdsCache = [];
 
+
 function ProdPic(filename) {
 
   var fileArray = filename.split('.');
@@ -62,6 +66,8 @@ function prodObjListMaker() {
 };
 prodObjListMaker();
 
+if (!!localStorage.allProdsStored == true){allProdsObjList = JSON.parse(localStorage.allProdsStored)}
+else{};
 
 function showRandomProd(prodNumber) {
   var random = Math.floor(Math.random() * allProdsObjList.length);
@@ -88,6 +94,7 @@ function finalOutput() {
   renderResults();
   labelDataMaker();
   drawChart();
+  localStorage.allProdsStored = JSON.stringify(allProdsObjList);
 }
 
 function clickCount() {
