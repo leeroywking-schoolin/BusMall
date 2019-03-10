@@ -66,7 +66,7 @@ function prodObjListMaker() {
 };
 prodObjListMaker();
 
-if (!!localStorage.allProdsStored == true){allProdsObjList = JSON.parse(localStorage.allProdsStored)}
+if (localStorage.allProdsStored){allProdsObjList = JSON.parse(localStorage.allProdsStored)}
 else{};
 
 function showRandomProd(prodNumber) {
